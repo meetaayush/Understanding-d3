@@ -1,46 +1,25 @@
-const canvas = d3.select(".canvas");
-const svg = canvas
-  .append("svg")
-  .attr("width", 600)
-  .attr("height", 600);
+const data = [
+  { width: 200, height: 100, fill: "purple" },
+  { width: 100, height: 50, fill: "pink" },
+  { width: 50, height: 30, fill: "red" }
+];
 
-// Creating group
-const group = svg.append("g");
+const svg = d3.select("svg");
 
-// Creating rectangle
-group
+const rects = svg
+  .selectAll("rect")
+  .data(data)
+  .attr("width", d => d.width)
+  .attr("height", d => d.height)
+  .attr("fill", d => d.fill);
+
+rects
+  .enter()
   .append("rect")
-  .attr("x", 20)
-  .attr("y", 20)
-  .attr("width", 100)
-  .attr("height", 100)
-  .attr("fill", "red");
+  .attr("width", d => d.width)
+  .attr("height", d => d.height)
+  .attr("fill", d => d.fill);
 
-// Creating a circle inside the rectangle
-group
-  .append("circle")
-  .attr("cx", 70)
-  .attr("cy", 70)
-  .attr("r", 50)
-  .attr("fill", "pink");
+// rects.enter().append("rect");
 
-// Creating a cross mark inside the circle
-// Vertical Line
-group
-  .append("line")
-  .attr("x1", 70)
-  .attr("y1", 20)
-  .attr("x2", 70)
-  .attr("y2", 120)
-  .attr("stroke", "grey");
-// Horizontal Line
-group
-  .append("line")
-  .attr("x1", 20)
-  .attr("y1", 70)
-  .attr("x2", 120)
-  .attr("y2", 70)
-  .attr("stroke", "grey");
-
-// Translating the group as a whole
-group.attr("transform", "translate(100, 300)");
+console.log(rects);
